@@ -1,0 +1,9 @@
+root: true
+extends: fnd
+rules:
+    indent: off
+    keyword-spacing: off
+    dot-location: off
+    operator-linebreak: off
+    curly: off
+    no-var: off

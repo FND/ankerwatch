@@ -1,0 +1,22 @@
+{
+	"scripts": {
+		"test": "npm-run-all --parallel format:check lint && echo ✓",
+		"lint": "eslint --cache src && echo ✓",
+		"format": "npm run format:js -- 'src/**/*.js'",
+		"format:js": "prettier --write",
+		"format:check": "npm run format -- --debug-check --list-different --no-write"
+	},
+	"pre-commit": [
+		"test"
+	],
+	"engines": {
+		"node": ">=12"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"eslint-config-fnd": "^1.8.0",
+		"npm-run-all": "^4.1.5",
+		"pre-commit": "^1.2.2",
+		"prettier": "^1.18.2"
+	}
+}
