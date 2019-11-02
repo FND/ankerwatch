@@ -17,9 +17,19 @@ module.exports = class Store {
 		this._posts = new Index("uri", true);
 		this._sites = new Index("slug");
 		this._topics = new Index("slug");
+		this._postsBySite = new RelationalIndex("slug", "uri");
 		this._topicsBySite = new RelationalIndex("slug", "slug");
 		this._sitesByTopic = new RelationalIndex("slug", "slug");
 		this._pending = this._ingest();
+	}
+
+	postsBySiteAndTopic(siteID, topicID) {
+		let posts = this._postsBySite.get(siteID);
+		return Array.from(posts).reduce((memo, postID) => {
+			let post = this._posts.get(postID);
+			let match = post.tags.some(tag => tag.slug === topicID);
+			return match ? memo.concat(post) : memo;
+		}, []);
 	}
 
 	async _ingest() {
@@ -51,7 +61,8 @@ module.exports = class Store {
 
 		// index sites by topic
 		this._topicsBySite.forEach(([siteID, topicIDs]) => {
-			report("INFO", siteID, `(${topicIDs.size} topics)`);
+			let posts = this._postsBySite.get(siteID).size;
+			report("INFO", siteID, `(${topicIDs.size} topics, ${posts} posts)`);
 
 			topicIDs.forEach(topicID => {
 				this._sitesByTopic.add({ slug: topicID }, { slug: siteID }); // XXX: hacky
@@ -81,6 +92,7 @@ module.exports = class Store {
 			);
 		}
 		let site = sites[0];
+		this._postsBySite.add(site, post);
 
 		topics.forEach(topic => {
 			this._topicsBySite.add(site, topic);
