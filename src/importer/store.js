@@ -23,13 +23,37 @@ module.exports = class Store {
 		this._pending = this._ingest();
 	}
 
-	postsBySiteAndTopic(siteID, topicID) {
+	postsBySiteAndTopic(site, topic) {
+		// allow for both entities and IDs, for convenience
+		let siteID = site.slug || site;
+		let topicID = topic.slug || topic;
+
 		let posts = this._postsBySite.get(siteID);
 		return Array.from(posts).reduce((memo, postID) => {
 			let post = this._posts.get(postID);
 			let match = post.tags.some(tag => tag.slug === topicID);
 			return match ? memo.concat(post) : memo;
 		}, []);
+	}
+
+	topicsBySite(site) {
+		let id = site.slug || site; // for convenience
+		let topics = this._topicsBySite.get(id);
+		return Array.from(topics).map(topicID => this._topics.get(topicID));
+	}
+
+	sitesByTopic(topic) {
+		let id = topic.slug || topic; // for convenience
+		let sites = this._sitesByTopic.get(id);
+		return Array.from(sites).map(siteID => this._sites.get(siteID));
+	}
+
+	get sites() {
+		return Array.from(this._sites.values());
+	}
+
+	get topics() {
+		return Array.from(this._topics.values());
 	}
 
 	async _ingest() {

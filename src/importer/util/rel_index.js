@@ -20,6 +20,11 @@ module.exports = class RelationalIndex extends Map {
 		items.add(value);
 	}
 
+	get(key) {
+		// XXX: fallback might be confusing if consumer expects mutability
+		return super.get(key) || new Set();
+	}
+
 	forEach(callback) {
 		Array.from(this.entries()).forEach(callback);
 	}
