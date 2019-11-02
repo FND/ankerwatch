@@ -36,16 +36,19 @@ module.exports = class Store {
 		}, []);
 	}
 
+	postsBySite(site) {
+		let id = site.slug || site; // for convenience
+		return resolve(id, this._postsBySite, this._posts);
+	}
+
 	topicsBySite(site) {
 		let id = site.slug || site; // for convenience
-		let topics = this._topicsBySite.get(id);
-		return Array.from(topics).map(topicID => this._topics.get(topicID));
+		return resolve(id, this._topicsBySite, this._topics);
 	}
 
 	sitesByTopic(topic) {
 		let id = topic.slug || topic; // for convenience
-		let sites = this._sitesByTopic.get(id);
-		return Array.from(sites).map(siteID => this._sites.get(siteID));
+		return resolve(id, this._sitesByTopic, this._sites);
 	}
 
 	get sites() {
@@ -131,4 +134,9 @@ function determineModel(slug) {
 		var type = SITE_TYPES[prefix]; // eslint-disable-line no-var
 	}
 	return type ? MODELS[type] : MODELS.TPC;
+}
+
+function resolve(id, relIndex, index) {
+	let items = relIndex.get(id);
+	return Array.from(items).map(id => index.get(id));
 }
