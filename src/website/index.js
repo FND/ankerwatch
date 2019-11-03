@@ -1,13 +1,16 @@
 "use strict";
 
 let importAll = require("../importer");
+let { retrieveSites } = require("../../config");
+
+let { log } = console;
 
 let TEMPLATE = `<!DOCTYPE html>
 <html lang="de">
 
 <head>
 	<meta charset="utf-8">
-	<title>Übersicht | anker-watch</title>
+	<title>Vorfallsberichte | anker-watch.de</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
 body {
@@ -17,7 +20,7 @@ body {
 </head>
 
 <body>
-	<h1>Übersicht</h1>
+	<h1>Vorfallsberichte</h1>
 	%BODY%
 </body>
 
@@ -26,32 +29,45 @@ body {
 main();
 
 async function main() {
+	let groupedSites = await retrieveSites();
+
 	let store = await importAll();
 	let [before, after] = TEMPLATE.split("%BODY%");
 
-	let { log } = console;
 	log(before);
-	store.sites.forEach(site => {
-		let postCount = store.postsBySite(site).length;
-		log(`<h2>🏢 ${site.name} <small>(${postCount})</small></h2>`);
-
-		let topics = store.topicsBySite(site);
-		if (!topics.length) {
-			return;
-		}
-
-		log("<ul>");
-		topics.forEach(topic => {
-			let posts = store.postsBySiteAndTopic(site, topic);
-			log(`<li>🏷 ${topic.name} <small>(${posts.length})</small>`);
-			log("<ul>");
-			posts.forEach(post => {
-				log(`<li><a href="${post.uri}">${post.title}</a></li>`);
-			});
-			log("</ul>");
-			log("</li>");
+	groupedSites.forEach(group => {
+		log("<article>");
+		group.forEach(site => {
+			renderSite(site, store);
 		});
-		log("</ul>");
+		log("</article>");
 	});
 	log(after);
+}
+
+function renderSite({ slug, name, bezirk }, store) {
+	let postCount = store.postsBySite(slug).length;
+	let heading = bezirk ? "h2" : "h3";
+	if (bezirk) {
+		name += `, ${bezirk}`;
+	}
+	log(`<${heading}>${name} <small>(${postCount})</small></${heading}>`);
+
+	let topics = store.topicsBySite(slug);
+	if (!topics.length) {
+		return;
+	}
+
+	log("<ul>");
+	topics.forEach(topic => {
+		let posts = store.postsBySiteAndTopic(slug, topic);
+		log(`<li>🏷 ${topic.name} <small>(${posts.length})</small>`);
+		log("<ul>");
+		posts.forEach(post => {
+			log(`<li><a href="${post.uri}">${post.title}</a></li>`);
+		});
+		log("</ul>");
+		log("</li>");
+	});
+	log("</ul>");
 }
