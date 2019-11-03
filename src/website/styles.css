@@ -1,0 +1,47 @@
+body {
+	font-family: sans-serif;
+	max-width: 40rem;
+	margin: 1em auto;
+}
+
+.tabs > ul {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	margin: 1em 0;
+	list-style-type: none;
+}
+
+.tabs article:not(:target) {
+	display: none;
+}
+
+.site h2::before {
+	content: "⚓ ";
+}
+
+.topics {
+	padding: 0;
+	list-style-type: none;
+}
+
+.topics > li::before {
+	content: "🏷 ";
+}
+
+.topics > li + li {
+	margin-bottom: 0.5em;
+}
+
+.topics > li > b {
+	display: inline-block;
+	margin-bottom: 0.5em;
+	font-weight: normal;
+}
+
+.topics ul {
+	margin-bottom: 1em;
+	padding-left: 1em;
+	list-style-type: disc;
+	line-height: 1.5;
+}

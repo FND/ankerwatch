@@ -2,73 +2,15 @@
 
 let importAll = require("../importer");
 let { retrieveSites } = require("../../config");
+let { readFile } = require("fs").promises;
+let path = require("path");
 
 let { log } = console;
 
-let TEMPLATE = `<!DOCTYPE html>
-<html lang="de">
-
-<head>
-	<meta charset="utf-8">
-	<title>Vorfallsberichte | anker-watch.de</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<style>
-body {
-	font-family: sans-serif;
-	max-width: 40rem;
-	margin: 1em auto;
-}
-
-.tabs > ul {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-evenly;
-	margin: 1em 0;
-	list-style-type: none;
-}
-
-.tabs article:not(:target) {
-	display: none;
-}
-
-.site h2::before {
-	content: "⚓ ";
-}
-
-.topics {
-	padding: 0;
-	list-style-type: none;
-}
-
-.topics > li::before {
-	content: "🏷 ";
-}
-
-.topics > li + li {
-	margin-bottom: 0.5em;
-}
-
-.topics > li > b {
-	display: inline-block;
-	margin-bottom: 0.5em;
-	font-weight: normal;
-}
-
-.topics ul {
-	margin-bottom: 1em;
-	padding-left: 1em;
-	list-style-type: disc;
-	line-height: 1.5;
-}
-	</style>
-</head>
-
-<body>
-	<h1>Vorfallsberichte</h1>
-	%BODY%
-</body>
-
-</html>`;
+let TEMPLATE = path.resolve(__dirname, "template.html");
+TEMPLATE = readFile(TEMPLATE, "utf8");
+let STYLES = path.resolve(__dirname, "styles.css");
+STYLES = readFile(STYLES, "utf8");
 
 main();
 
@@ -76,7 +18,10 @@ async function main() {
 	let groupedSites = await retrieveSites();
 
 	let store = await importAll();
-	let [before, after] = TEMPLATE.split("%BODY%");
+	let template = await TEMPLATE;
+	let styles = await STYLES;
+	template = template.replace("%STYLES%", styles);
+	let [before, after] = template.split("%BODY%");
 
 	log(before);
 	log('<div class="tabs">');
