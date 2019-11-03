@@ -1,8 +1,63 @@
+/* reset, adapted from https://hankchizljaw.com/wrote/a-modern-css-reset/ */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+	margin: 0;
+}
+
 body {
 	font-family: sans-serif;
 	max-width: 40rem;
 	margin: 1em auto;
+	scroll-behavior: smooth;
 }
+
+h1,
+h2,
+h3 {
+	margin-bottom: 0.5em;
+}
+
+ul {
+	padding-left: 1em;
+}
+
+a {
+	text-decoration-skip-ink: auto;
+}
+
+[hidden] { /* avoids specificity confusion */
+	display: none;
+}
+
+@media(prefers-reduced-motion: reduce) {
+	* {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+/* components */
 
 .tabs > ul {
 	display: flex;
@@ -41,7 +96,6 @@ body {
 
 .topics ul {
 	margin-bottom: 1em;
-	padding-left: 1em;
 	list-style-type: disc;
 	line-height: 1.5;
 }
