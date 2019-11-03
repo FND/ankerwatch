@@ -11,6 +11,8 @@ let TEMPLATE = path.resolve(__dirname, "template.html");
 TEMPLATE = readFile(TEMPLATE, "utf8");
 let STYLES = path.resolve(__dirname, "styles.css");
 STYLES = readFile(STYLES, "utf8");
+let BEHAVIOR = path.resolve(__dirname, "behavior.js");
+BEHAVIOR = readFile(BEHAVIOR, "utf8");
 
 main();
 
@@ -20,7 +22,16 @@ async function main() {
 	let store = await importAll();
 	let template = await TEMPLATE;
 	let styles = await STYLES;
-	template = template.replace("%STYLES%", styles);
+	let behavior = await BEHAVIOR;
+	let sites = groupedSites.flat().map(site => {
+		let { slug, name, bezirk, latitude: lat, longitude: lon } = site;
+		site = { slug, name, lat, lon };
+		return bezirk ? { ...site, bezirk } : site;
+	});
+	template = template
+		.replace("%STYLES%", styles)
+		.replace("%BEHAVIOR%", behavior)
+		.replace("%SITES%", JSON.stringify(sites));
 	let [before, after] = template.split("%BODY%");
 
 	log(before);
@@ -49,7 +60,12 @@ async function main() {
 }
 
 function renderSite({ slug, name, bezirk }, store) {
-	let site = store.siteByID(slug);
+	try {
+		var site = store.siteByID(slug); // eslint-disable-line no-var
+	} catch (err) {
+		return; // no data
+	}
+
 	let postCount = store.postsBySite(slug).length;
 	let heading = bezirk ? "h2" : "h3";
 	if (bezirk) {
