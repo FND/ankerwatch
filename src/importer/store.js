@@ -51,6 +51,10 @@ module.exports = class Store {
 		return resolve(id, this._sitesByTopic, this._sites);
 	}
 
+	siteByID(id) {
+		return this._sites.get(id);
+	}
+
 	get sites() {
 		return Array.from(this._sites.values());
 	}

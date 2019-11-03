@@ -6,9 +6,9 @@ let { retrieveJSON } = require("../util");
 // NB: WordPress-specific
 module.exports = class Tag {
 	constructor(data) {
-		this.id = data.id;
-		this.slug = data.slug;
-		this.name = data.name;
+		["id", "slug", "name", "link"].forEach(field => {
+			this[field] = data[field];
+		});
 		// allow subclasses to to be constructed from `Tag` instances as well as
 		// from original JSON data
 		let { _links } = data;

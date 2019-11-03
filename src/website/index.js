@@ -84,9 +84,9 @@ async function main() {
 	log("<ul>");
 	groupedSites.forEach(group => {
 		let ankerzentrum = group[0];
-		log("<li>");
-		log(`<a href="#${ankerzentrum.slug}">${ankerzentrum.name}</a>`);
-		log("</li>");
+		log(`<li>
+		<a href="#${ankerzentrum.slug}">${ankerzentrum.name}</a>
+		</li>`);
 	});
 	log("</ul>");
 
@@ -104,12 +104,15 @@ async function main() {
 }
 
 function renderSite({ slug, name, bezirk }, store) {
+	let site = store.siteByID(slug);
 	let postCount = store.postsBySite(slug).length;
 	let heading = bezirk ? "h2" : "h3";
 	if (bezirk) {
 		name += `, ${bezirk}`;
 	}
-	log(`<${heading}>${name} <small>(${postCount})</small></${heading}>`);
+	log(`<${heading}>
+	<a href="${site.link}">${name}</a> <small>(${postCount})</small>
+	</${heading}>`);
 
 	let topics = store.topicsBySite(slug);
 	if (!topics.length) {
