@@ -1,0 +1,9 @@
+slug,latitude,longitude,name,bezirk,hauptfarbe,sekundaerfarbe,schriftfarbe
+anker-zentrum-ingolstatt-manching,1.0,1.0,Manching/Ingolstadt,Oberbayern,#6C8EBF,#DAE8FC,#000
+dependance-waldkraiburg,1.7,1.7,Waldkraiburg,,,,
+dependance-fuerstenfeldbruck,1.8,1.8,Fürstenfeldbruck,,,,
+
+anker-zentrum-deggendorf,2.0,2.0,Deggendorf,Niederbayern,#82B366,#D5E8D4,#000
+dependance-stephansposching,2.3,2.3,Stephansposching,,,,
+
+anker-zentrum-bamberg,4.0,4.0,Bamberg,Oberfranken,#9673A6,#E1D5E7,#000

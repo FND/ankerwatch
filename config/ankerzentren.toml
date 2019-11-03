@@ -1,0 +1,41 @@
+[anker-zentrum-ingolstatt-manching]
+name = "Manching/Ingolstadt"
+bezirk = "Oberbayern"
+hauptfarbe = "#6C8EBF"
+sekundaerfarbe = "#DAE8FC"
+schriftfarbe = "#000"
+latitude = 1
+longitude = 1
+
+    [anker-zentrum-ingolstatt-manching.dependance-waldkraiburg]
+    name = "Waldkraiburg"
+    latitude = 1.7
+    longitude = 1.7
+
+    [anker-zentrum-ingolstatt-manching.dependance-fuerstenfeldbruck]
+    name = "Fürstenfeldbruck"
+    latitude = 1.8
+    longitude = 1.8
+
+[anker-zentrum-deggendorf]
+name = "Deggendorf"
+bezirk = "Niederbayern"
+hauptfarbe = "#82B366"
+sekundaerfarbe = "#D5E8D4"
+schriftfarbe = "#000"
+latitude = 2
+longitude = 2
+
+    [anker-zentrum-deggendorf.dependance-stephansposching]
+    name = "Stephansposching"
+    latitude = 2.3
+    longitude = 2.3
+
+[anker-zentrum-bamberg]
+name = "Bamberg"
+bezirk = "Oberfranken"
+hauptfarbe = "#9673A6"
+sekundaerfarbe = "#E1D5E7"
+schriftfarbe = "#000"
+latitude = 4
+longitude = 4
