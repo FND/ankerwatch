@@ -15,6 +15,50 @@ let TEMPLATE = `<!DOCTYPE html>
 	<style>
 body {
 	font-family: sans-serif;
+	max-width: 40rem;
+	margin: 1em auto;
+}
+
+.tabs > ul {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	margin: 1em 0;
+	list-style-type: none;
+}
+
+.tabs article:not(:target) {
+	display: none;
+}
+
+.site h2::before {
+	content: "⚓ ";
+}
+
+.topics {
+	padding: 0;
+	list-style-type: none;
+}
+
+.topics > li::before {
+	content: "🏷 ";
+}
+
+.topics > li + li {
+	margin-bottom: 0.5em;
+}
+
+.topics > li > b {
+	display: inline-block;
+	margin-bottom: 0.5em;
+	font-weight: normal;
+}
+
+.topics ul {
+	margin-bottom: 1em;
+	padding-left: 1em;
+	list-style-type: disc;
+	line-height: 1.5;
 }
 	</style>
 </head>
@@ -35,13 +79,27 @@ async function main() {
 	let [before, after] = TEMPLATE.split("%BODY%");
 
 	log(before);
+	log('<div class="tabs">');
+
+	log("<ul>");
 	groupedSites.forEach(group => {
-		log("<article>");
+		let ankerzentrum = group[0];
+		log("<li>");
+		log(`<a href="#${ankerzentrum.slug}">${ankerzentrum.name}</a>`);
+		log("</li>");
+	});
+	log("</ul>");
+
+	groupedSites.forEach(group => {
+		let ankerzentrum = group[0];
+		log(`<article id="${ankerzentrum.slug}" class="site">`);
 		group.forEach(site => {
 			renderSite(site, store);
 		});
 		log("</article>");
 	});
+
+	log("</div>");
 	log(after);
 }
 
@@ -58,10 +116,11 @@ function renderSite({ slug, name, bezirk }, store) {
 		return;
 	}
 
-	log("<ul>");
+	log('<ul class="topics">');
 	topics.forEach(topic => {
 		let posts = store.postsBySiteAndTopic(slug, topic);
-		log(`<li>🏷 ${topic.name} <small>(${posts.length})</small>`);
+		log("<li>");
+		log(`<b>${topic.name} <small>(${posts.length})</small></b>`);
 		log("<ul>");
 		posts.forEach(post => {
 			log(`<li><a href="${post.uri}">${post.title}</a></li>`);
