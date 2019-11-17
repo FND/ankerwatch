@@ -17,10 +17,24 @@ let SCRIPTS = path.resolve(__dirname, FILENAMES.js);
 
 module.exports = async targetDir => {
 	let groupedSites = await retrieveSites();
-	let siteData = groupedSites.flat().map(site => {
-		let { slug, name, bezirk, latitude: lat, longitude: lon } = site;
-		site = { slug, name, lat, lon };
-		return bezirk ? { ...site, bezirk } : site;
+	let ankerzentrum;
+	let siteData = groupedSites.flat().map((site, i) => {
+		let data = {
+			slug: site.slug,
+			name: site.name,
+			lat: site.latitude,
+			lon: site.longitude,
+			schriftfarbe: site.schriftfarbe
+		};
+
+		let { bezirk } = site;
+		if (!bezirk) {
+			return { ...data, ankerzentrum };
+		}
+
+		ankerzentrum = i;
+		let { hauptfarbe, sekundaerfarbe } = site;
+		return { ...data, bezirk, hauptfarbe, sekundaerfarbe };
 	});
 	let store = await importAll();
 

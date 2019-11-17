@@ -1,5 +1,14 @@
 "use strict";
 
+let { readFileSync } = require("fs");
+let path = require("path");
+
+// icons adapted from https://iconsvg.xyz
+let ICONS = {
+	anz: readFileSync(path.resolve(__dirname, "icons", "anz.svg"), "utf8"),
+	dep: readFileSync(path.resolve(__dirname, "icons", "dep.svg"), "utf8")
+};
+
 module.exports = (
 	{ title, content, siteData },
 	styles,
@@ -28,6 +37,12 @@ ${content}
 			integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
 			crossorigin="anonymous"></script>
 
+	<script id="icon-anz" type="text/svg">
+${ICONS.anz}
+	</script>
+	<script id="icon-dep" type="text/svg">
+${ICONS.dep}
+	</script>
 	<script id="sites" type="text/json">
 ${siteData}
 	</script>

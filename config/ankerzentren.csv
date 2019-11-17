@@ -1,9 +1,9 @@
-slug,latitude,longitude,name,bezirk,hauptfarbe,sekundaerfarbe,schriftfarbe
-anker-zentrum-ingolstatt-manching,48.1,9.0,Manching/Ingolstadt,Oberbayern,#6C8EBF,#DAE8FC,#000
-dependance-waldkraiburg,48.11,9.01,Waldkraiburg,,,,
-dependance-fuerstenfeldbruck,48.12,9.02,Fürstenfeldbruck,,,,
+slug,latitude,longitude,name,bezirk,schriftfarbe,hauptfarbe,sekundaerfarbe
+anker-zentrum-ingolstatt-manching,48.1,9.0,Manching/Ingolstadt,Oberbayern,#EEE,#6C8EBF,#DAE8FC
+dependance-waldkraiburg,48.11,9.01,Waldkraiburg,,#333,,
+dependance-fuerstenfeldbruck,48.12,9.02,Fürstenfeldbruck,,#333,,
 
-anker-zentrum-deggendorf,48.8,9.2,Deggendorf,Niederbayern,#82B366,#D5E8D4,#000
-dependance-stephansposching,48.81,9.21,Stephansposching,,,,
+anker-zentrum-deggendorf,48.8,9.2,Deggendorf,Niederbayern,#EEE,#82B366,#D5E8D4
+dependance-stephansposching,48.81,9.21,Stephansposching,,#333,,
 
-anker-zentrum-bamberg,48.1,11.5,Bamberg,Oberfranken,#9673A6,#E1D5E7,#000
+anker-zentrum-bamberg,48.1,11.5,Bamberg,Oberfranken,#EEE,#9673A6,#E1D5E7

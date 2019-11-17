@@ -116,3 +116,34 @@ main > *:not(.fullwidth) {
 .map {
 	height: 80%;
 }
+
+/* adapted from https://stackoverflow.com/a/40870439 -- XXX: magic numbers */
+.map .site-anz,
+.map .site-dep {
+	display: flex;
+	width: 3rem;
+	height: 3rem;
+	justify-content: center;
+	border: 1px solid #FFF;
+	position: relative;
+	left: -1.5rem;
+	top: -1.5rem;
+	border-radius: 3rem 3rem 0;
+	background-color: #EEE;
+	transform: rotate(45deg);
+}
+
+.map .site-anz svg,
+.map .site-dep svg {
+	width: 2.5rem; /* XXX: magic number */
+	stroke: currentColor;
+	stroke-width: 3;
+	stroke-linecap: square;
+	stroke-linejoin: bevel;
+	fill: none;
+	transform: rotate(-45deg);
+}
+
+.map .site-dep svg {
+	width: 1.5rem; /* XXX: magic number */
+}
