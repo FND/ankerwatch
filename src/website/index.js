@@ -1,22 +1,21 @@
+#!/usr/bin/env node
 "use strict";
 
 let renderPage = require("./template");
 let importAll = require("../importer");
 let { retrieveSites } = require("../../config");
-let { readFile } = require("fs").promises;
+let { copyFile, writeFile } = require("fs").promises;
 let path = require("path");
 
-let STYLES = path.resolve(__dirname, "styles.css");
-STYLES = readFile(STYLES, "utf8");
-let SCRIPTS = path.resolve(__dirname, "behavior.js");
-SCRIPTS = readFile(SCRIPTS, "utf8");
+let FILENAMES = {
+	html: "index.html",
+	css: "styles.css",
+	js: "behavior.js"
+};
+let STYLES = path.resolve(__dirname, FILENAMES.css);
+let SCRIPTS = path.resolve(__dirname, FILENAMES.js);
 
-main();
-
-async function main() {
-	let styles = await STYLES;
-	let scripts = await SCRIPTS;
-
+module.exports = async targetDir => {
 	let groupedSites = await retrieveSites();
 	let siteData = groupedSites.flat().map(site => {
 		let { slug, name, bezirk, latitude: lat, longitude: lon } = site;
@@ -31,11 +30,15 @@ async function main() {
 			content: renderTabs(groupedSites, store),
 			siteData: JSON.stringify(siteData)
 		},
-		styles,
-		scripts
+		FILENAMES.css,
+		FILENAMES.js
 	);
-	console.log(html); // eslint-disable-line no-console
-}
+	return Promise.all([
+		writeFile(path.resolve(targetDir, FILENAMES.html), html),
+		copyFile(STYLES, path.resolve(targetDir, FILENAMES.css)),
+		copyFile(SCRIPTS, path.resolve(targetDir, FILENAMES.js))
+	]);
+};
 
 function renderTabs(groupedSites, store) {
 	return `

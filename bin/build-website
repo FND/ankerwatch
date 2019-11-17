@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+"use strict";
+
+let generateSite = require("../src/website");
+let { report } = require("../src/util");
+let path = require("path");
+
+main();
+
+async function main() {
+	let targetDir = process.argv[2];
+	if(!targetDir) {
+		console.error("ERROR: target directory not specified");
+		process.exit(1);
+	}
+
+	targetDir = path.resolve(targetDir);
+	report("INFO", `target directory is \`${targetDir}\``);
+	await generateSite(targetDir);
+}

@@ -33,8 +33,5 @@ class Index extends Map {
 module.exports = {
 	Index,
 	RelationalIndex,
-	retrieveJSON,
-	report: (level, ...msg) => {
-		console.error(`[${level}]`, ...msg);
-	}
+	retrieveJSON
 };

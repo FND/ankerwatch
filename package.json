@@ -1,5 +1,6 @@
 {
 	"scripts": {
+		"start": "mkdir -p dist; ./bin/build-website ./dist",
 		"test": "npm-run-all --parallel format:check lint && echo ✓",
 		"lint": "eslint --cache src && echo ✓",
 		"format": "npm run format:js -- 'src/**/*.js'",

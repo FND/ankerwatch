@@ -14,9 +14,7 @@ module.exports = (
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
 			integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
 			crossorigin="anonymous">
-	<style>
-${styles}
-	</style>
+	<link rel="stylesheet" href="${styles}">
 </head>
 
 <body>
@@ -33,9 +31,7 @@ ${content}
 	<script id="sites" type="text/json">
 ${siteData}
 	</script>
-	<script>
-${scripts}
-	</script>
+	<script src="${scripts}"></script>
 </body>
 
 </html>

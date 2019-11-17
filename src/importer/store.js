@@ -1,7 +1,8 @@
 "use strict";
 
 let { Topic, Ankerzentrum, Dependance } = require("./models");
-let { Index, RelationalIndex, report } = require("./util");
+let { Index, RelationalIndex } = require("./util");
+let { report } = require("../util");
 let { SITE_TYPES } = require("./config");
 
 // XXX: awkwardly redundant WRT config
