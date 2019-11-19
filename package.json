@@ -14,7 +14,7 @@
 		"node": ">=12"
 	},
 	"dependencies": {
-		"ankerwatch-config": "./config"
+		"csv-parse": "^4.8.2"
 	},
 	"devDependencies": {
 		"eslint-config-fnd": "^1.8.0",
