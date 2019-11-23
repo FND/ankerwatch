@@ -104,13 +104,13 @@ function renderPostsByTopic(topics, site, store) {
 		return "";
 	}
 	return `
-<ul class="topics">
+<dl class="topics">
 	${topics
 		.map(topic => {
 			let posts = store.postsBySiteAndTopic(site, topic);
 			return `
-	<li>
-		<b>${topic.name} <small>(${posts.length})</small></b>
+	<dt>${topic.name} <small>(${posts.length})</small></dt>
+	<dd>
 		<ul>
 			${posts
 				.map(({ uri, title }) => {
@@ -118,7 +118,7 @@ function renderPostsByTopic(topics, site, store) {
 				})
 				.join("\n")}
 		</ul>
-	</li>`;
+	</dd>`;
 		})
 		.join("\n")}
 </ul>`;

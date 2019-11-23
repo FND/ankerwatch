@@ -90,21 +90,14 @@ main > *:not(.fullwidth) {
 
 .topics {
 	padding: 0;
-	list-style-type: none;
 }
 
-.topics > li::before {
+.topics > * {
+	margin-bottom: 0.5em;
+}
+
+.topics > dt::before {
 	content: "🏷 ";
-}
-
-.topics > li + li {
-	margin-bottom: 0.5em;
-}
-
-.topics > li > b {
-	display: inline-block;
-	margin-bottom: 0.5em;
-	font-weight: normal;
 }
 
 .topics ul {
