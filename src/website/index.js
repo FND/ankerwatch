@@ -58,21 +58,19 @@ function renderTabs(groupedSites, store) {
 	return `
 <div class="tabs">
 	<ul>
-	${groupedSites
-		.map(group => {
-			let { slug, name } = group[0]; // Ankerzentrum
-			return `<li><a href="#${slug}">${name}</a></li>`;
-		})
-		.join("\n")}
+	${loop(groupedSites, group => {
+		let { slug, name } = group[0]; // Ankerzentrum
+		return `
+		<li><a href="#${slug}">${name}</a></li>`;
+	})}
 	</ul>
-	${groupedSites
-		.map(group => {
-			let { slug } = group[0]; // Ankerzentrum
-			return `<article id="${slug}" class="site">
-			${group.map(site => renderSite(site, store)).join("\n")}
+	${loop(groupedSites, group => {
+		let { slug } = group[0]; // Ankerzentrum
+		return `
+		<article id="${slug}" class="site">
+			${loop(group, site => renderSite(site, store))}
 		</article>`;
-		})
-		.join("\n")}
+	})}
 </div>`;
 }
 
@@ -105,21 +103,23 @@ function renderPostsByTopic(topics, site, store) {
 	}
 	return `
 <dl class="topics">
-	${topics
-		.map(topic => {
-			let posts = store.postsBySiteAndTopic(site, topic);
-			return `
+	${loop(topics, topic => {
+		let posts = store.postsBySiteAndTopic(site, topic);
+		return `
 	<dt>${topic.name} <small>(${posts.length})</small></dt>
 	<dd>
 		<ul>
-			${posts
-				.map(({ uri, title }) => {
-					return `<li><a href="${uri}">${title}</a></li>`;
-				})
-				.join("\n")}
+			${loop(
+				posts,
+				({ uri, title }) => `
+			<li><a href="${uri}">${title}</a></li>`
+			)}
 		</ul>
 	</dd>`;
-		})
-		.join("\n")}
+	})}
 </ul>`;
+}
+
+function loop(items, fn) {
+	return items.map(fn).join("\n");
 }
