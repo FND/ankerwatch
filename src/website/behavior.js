@@ -1,3 +1,4 @@
+/* eslint-env browser */
 /* global L */
 (function() {
 	var TILES = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
@@ -9,6 +10,7 @@
 	};
 	var MAP_ID = "map";
 	var SITES_ID = "sites";
+	var TABS_SELECTOR = ".tabs > ul";
 	var ZOOM = 7;
 
 	var sites = document.getElementById(SITES_ID).textContent;
@@ -17,6 +19,9 @@
 		return [site.lat, site.lon];
 	});
 
+	var tabs = document.querySelector(TABS_SELECTOR); // NB: assumes singleton
+	tabs.addEventListener("click", onTab);
+
 	var map = L.map(MAP_ID, { zoom: ZOOM });
 	map.fitBounds(bounds, { padding: [50, 50] });
 	L.tileLayer(TILES, { attribution: COPYRIGHT }).addTo(map);
@@ -24,6 +29,22 @@
 	sites.forEach(function(site) {
 		addSite(site, sites);
 	});
+
+	function onTab(ev) {
+		var link = ev.target;
+		if (link.nodeName !== "A" || !link.hash) {
+			return;
+		}
+		// suppress auto-scrolling to frag ID while retaining URI state
+		ev.preventDefault();
+		history.pushState(null, null, link.href);
+		// force `:target` taking effect (hacky; cf. discussion at
+		// https://bugs.webkit.org/show_bug.cgi?id=83490)
+		history.back();
+		setTimeout(function() {
+			history.forward();
+		}, 1);
+	}
 
 	function addSite(site, sites) {
 		var desc = "<b>" + site.name + "</b>";
