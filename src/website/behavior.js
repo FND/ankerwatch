@@ -30,6 +30,16 @@
 		addSite(site, sites);
 	});
 
+	function onSite(ev) {
+		var site = ev.sourceTarget.options.site;
+		// XXX: tight coupling
+		var slug = site.anz ? site.anz.slug : site.slug;
+		var tab = tabs.querySelector('a[href="#' + slug + '"]');
+		if (tab) {
+			activateSite(tab);
+		}
+	}
+
 	function onTab(ev) {
 		var link = ev.target;
 		if (link.nodeName !== "A" || !link.hash) {
@@ -37,6 +47,10 @@
 		}
 		// suppress auto-scrolling to frag ID while retaining URI state
 		ev.preventDefault();
+		activateSite(link);
+	}
+
+	function activateSite(link) {
 		history.pushState(null, null, link.href);
 		// force `:target` taking effect (hacky; cf. discussion at
 		// https://bugs.webkit.org/show_bug.cgi?id=83490)
@@ -60,18 +74,14 @@
 			// XXX: hacky; custom extension seems brittle?
 			site: {
 				slug: site.slug,
+				anz: anz,
 				lat: site.lat,
 				lon: site.lon
 			}
 		})
 			.addTo(map)
 			.bindPopup(desc)
-			.on("click", onSelect);
-	}
-
-	function onSelect(ev) {
-		var site = ev.sourceTarget.options.site;
-		map.setView([site.lat, site.lon]);
+			.on("click", onSite);
 	}
 
 	// NB: `anz` is a Dependance's associated Ankerzentrum, if any
