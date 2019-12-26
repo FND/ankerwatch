@@ -14,7 +14,7 @@
 		"node": ">=12"
 	},
 	"dependencies": {
-		"csv-parse": "^4.8.2"
+		"csv-parse": "^4.8.3"
 	},
 	"devDependencies": {
 		"eslint-config-fnd": "^1.8.0",
