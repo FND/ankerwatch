@@ -28,9 +28,19 @@ module.exports = (
 
 <body>
 	<main>
-		<h1>${title}</h1>
+		<header class="fullwidth">
+			<h1>
+				<a href="">${title}</a>
+			</h1>
+			<a href="https://www.anker-watch.de">anker-watch.de</a>
+		</header>
 		<div id="map" class="map fullwidth"></div>
+
 ${content}
+
+		<footer class="fullwidth">
+			<a href="https://www.anker-watch.de/wir-ueber-uns/kontakt/">Impressum &amp; Datenschutz</a>
+		</footer>
 	</main>
 
 	 <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"

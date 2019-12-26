@@ -111,8 +111,8 @@ function renderPostsByTopic(topics, site, store) {
 		<ul>
 			${loop(
 				posts,
-				({ uri, title }) => `
-			<li><a href="${uri}">${title}</a></li>`
+				({ uri, title, timestamp: ts }) => `
+			<li><a href="${uri}">${title}</a> <time>${formatDate(ts)}</time></li>`
 			)}
 		</ul>
 	</dd>`;
@@ -122,4 +122,8 @@ function renderPostsByTopic(topics, site, store) {
 
 function loop(items, fn) {
 	return items.map(fn).join("\n");
+}
+
+function formatDate(ts) {
+	return `${ts.getDate()}.${ts.getMonth() + 1}.${ts.getFullYear()}`;
 }

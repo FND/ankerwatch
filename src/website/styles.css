@@ -23,14 +23,9 @@ dd {
 	margin: 0;
 }
 
-html,
-body,
-main {
-	height: 100%; /* required for `.map` */
-}
-
 body {
 	font-family: sans-serif;
+	line-height: 1.5;
 	scroll-behavior: smooth;
 }
 
@@ -63,6 +58,12 @@ a {
 
 /* components */
 
+html,
+body,
+main {
+	height: 100%; /* required for `.map` */
+}
+
 main {
 	margin-top: 1em;
 }
@@ -70,6 +71,63 @@ main {
 main > *:not(.fullwidth) {
 	max-width: 40rem;
 	margin: 0 auto;
+}
+
+h1,
+h2,
+h3 {
+	color: #149FAC;
+}
+
+h1 {
+	font-size: 2rem;
+}
+
+h2 {
+	margin-bottom: 2rem;
+	border-bottom: 2px solid #149FAC;
+}
+
+h3 {
+	border-bottom: 1px dashed #149FAC;
+}
+
+footer {
+	display: flex;
+	height: 8rem;
+	justify-content: center;
+	align-items: center;
+	background-color: #3A3B3D;
+}
+
+h1 a,
+h2 a,
+h3 a {
+	text-decoration: none; /* XXX: a11y */
+}
+
+header a,
+footer a,
+.tabs a {
+	color: #149FAC;
+}
+header a:hover,
+footer a:hover,
+.tabs a:hover {
+	color: #FE9734;
+}
+
+footer a,
+.tabs a {
+	font-size: 1.2rem;
+	font-weight: bold;
+}
+
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0 1em;
 }
 
 .tabs > ul {
@@ -102,12 +160,19 @@ main > *:not(.fullwidth) {
 
 .topics ul {
 	margin-bottom: 1em;
-	list-style-type: disc;
+	list-style-type: none;
 	line-height: 1.5;
+}
+
+.topics time {
+	font-size: smaller;
 }
 
 .map {
 	height: 80%;
+	border: none;
+	border-top: 8px solid #149FAC;
+	margin-bottom: 1.5rem;
 }
 
 /* adapted from https://stackoverflow.com/a/40870439 -- XXX: magic numbers */
